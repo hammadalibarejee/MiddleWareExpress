@@ -1,5 +1,6 @@
 import express from "express";
 import fs from "fs";
+
 // import morgan from "morgan ";
 
 const PORT=3000 || process.env.PORT;
@@ -35,12 +36,14 @@ const postUser=(req,res)=>{
             }
         })
     }))
-
-
 }
 
 // app.use(morgan('dev'));
 app.use(express.json());
+
+
+const router= express.Router();
+app.use('/users',router);
 
 app.use((req,res,next)=>{
     console.log("Hello from the middle ware")
@@ -54,7 +57,8 @@ app.use((req,res,next)=>{
 app.route("/")
     .get(hello);
 
-app.route("/users")
+router
+    .route('/')
     .get(showUser) 
     .post(postUser);
 
